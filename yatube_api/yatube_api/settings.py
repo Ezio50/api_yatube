@@ -1,9 +1,7 @@
-"""Django settings for yatube project."""
-
 from pathlib import Path
 
+# Определение базовой директории проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'm%(5u7nv9j2%@3xb%#c3p-$9&0$kq$j6l@9+@ogairu48a+dy+'
@@ -17,13 +15,21 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    # Стандартные приложения Django
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Сторонние приложения
+    'rest_framework',
+    'rest_framework.authtoken',
+
+    # Приложения нашего проекта
     'posts.apps.PostsConfig',
+    'api',  # новое приложение для API
 ]
 
 MIDDLEWARE = [
@@ -37,6 +43,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'yatube_api.urls'
+
 TEMPLATES_DIR = BASE_DIR / 'templates'
 TEMPLATES = [
     {
@@ -58,6 +65,7 @@ WSGI_APPLICATION = 'yatube_api.wsgi.application'
 
 
 # Database
+# Используем SQLite для простоты
 
 DATABASES = {
     'default': {
@@ -84,6 +92,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Internationalization
 
 LANGUAGE_CODE = 'ru-RU'
@@ -103,3 +112,16 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+# Настройки Django REST Framework
+REST_FRAMEWORK = {
+    # Используем токеновую аутентификацию
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    # По умолчанию: для неаутентифицированных пользователей доступны только безопасные методы (GET, HEAD, OPTIONS)
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+}
