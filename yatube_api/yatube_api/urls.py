@@ -5,8 +5,8 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v1/', include('api.urls')),  # включаем маршруты нашего API
 ]
-
 
 if settings.DEBUG:
     urlpatterns += static(
