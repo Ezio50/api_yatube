@@ -4,7 +4,6 @@ from .views import PostViewSet
 
 router = DefaultRouter()
 router.register(r'posts', PostViewSet)
-
 urlpatterns = [
     path('', include(router.urls)),
 ]
